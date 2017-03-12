@@ -4,12 +4,21 @@ from ws_interlace import views
 from rest_framework.routers import DefaultRouter
 from ws_interlace.views import WorksheetViewSet
 from rest_framework import renderers
+from django.views.generic import TemplateView
+
 
 router = DefaultRouter()
 router.register(r'worksheets', views.WorksheetViewSet)
 
 urlpatterns = [
     url(r'^$', views.index, name='home'),
+    # The new URL entries we're adding:
+    url(r'^about/$',
+        TemplateView.as_view(template_name='about.html'), name='about'),
+    url(r'^contact/$',
+        TemplateView.as_view(template_name='contact.html'), name='contact'),
+
+
     url(r'^api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

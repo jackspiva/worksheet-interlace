@@ -1,13 +1,8 @@
-<!doctype html>
-<html>
-
-<head>
-    <title>My Hello Web App Project</title>
-</head>
-
-<body>
-    <h1>Hello World!</h1>
-    <p>I am a basic website.</p>
-</body>
-
-</html>
+{% extends 'base.html' %} {% block title %} Homepage - {{ block.super }} {% endblock title %} {% block content %}
+<div class="list-group">
+    {% for worksheet in worksheets %}
+    <a href="#" class="list-group-item ">
+        {{ worksheet.title }}
+      </a> {% endfor %}
+</div>
+{% endblock content %}

@@ -19,4 +19,4 @@ class WorksheetViewSet(viewsets.ModelViewSet):
 
 def index(request):
     queryset = Worksheet.objects.all()
-    return render(request, 'index.html')
+    return render(request, 'index.html', {'worksheets': queryset, })
