@@ -10,3 +10,11 @@ class Worksheet(models.Model):
 
     class Meta:
         ordering = ('created',)
+
+
+class Answer(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=100, blank=True, default='')
+    description = models.TextField(blank=True, null=True, default='')
+    worksheet = models.ForeignKey(
+        to=Worksheet, related_name="answers", blank=True, null=True)
