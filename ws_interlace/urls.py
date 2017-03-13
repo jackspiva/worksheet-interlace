@@ -5,6 +5,7 @@ from rest_framework.routers import DefaultRouter
 from ws_interlace.views import WorksheetViewSet
 from rest_framework import renderers
 from django.views.generic import TemplateView
+from django.conf import settings
 
 
 router = DefaultRouter()
@@ -17,8 +18,8 @@ urlpatterns = [
         TemplateView.as_view(template_name='about.html'), name='about'),
     url(r'^contact/$',
         TemplateView.as_view(template_name='contact.html'), name='contact'),
-
-
+    url(r'^worksheets/(?P<slug>[-\w]+)/$', views.worksheet_detail,
+        name='worksheet_detail'),
     url(r'^api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

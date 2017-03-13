@@ -20,3 +20,12 @@ class WorksheetViewSet(viewsets.ModelViewSet):
 def index(request):
     queryset = Worksheet.objects.all()
     return render(request, 'index.html', {'worksheets': queryset, })
+
+
+def worksheet_detail(request, slug):
+    worksheet = Worksheet.objects.get(slug=slug)
+    answers = worksheet.answers.all()
+    return render(request, 'worksheets/worksheet_detail.html', {
+        'worksheet': worksheet,
+        'answers': answers,
+    })
