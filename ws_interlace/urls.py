@@ -2,7 +2,7 @@ from django.conf.urls import url, include
 from rest_framework.urlpatterns import format_suffix_patterns
 from ws_interlace import views
 from rest_framework.routers import DefaultRouter
-from ws_interlace.views import WorksheetViewSet
+from ws_interlace.views import WorksheetViewSet, AnswerViewSet
 from rest_framework import renderers
 from django.views.generic import TemplateView
 from django.conf import settings
@@ -10,7 +10,7 @@ from django.conf import settings
 
 router = DefaultRouter()
 router.register(r'worksheets', views.WorksheetViewSet)
-
+router.register(r'answers', views.AnswerViewSet)
 urlpatterns = [
     url(r'^$', views.index, name='home'),
     # The new URL entries we're adding:

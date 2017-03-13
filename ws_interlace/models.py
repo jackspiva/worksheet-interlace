@@ -34,8 +34,7 @@ class Answer(models.Model):
             self.slug = slugify(self.title)
 
         super(Answer, self).save(*args, **kwargs)
-    worksheet = models.ForeignKey(
-        to=Worksheet, related_name="answers", blank=True, null=True)
+    worksheet = models.ForeignKey(Worksheet)
 
 
 def get_image_path(instance, filename):
