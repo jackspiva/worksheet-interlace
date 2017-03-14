@@ -21,5 +21,8 @@ urlpatterns = [
     url(r'^worksheets/(?P<slug>[-\w]+)/$', views.worksheet_detail,
         name='worksheet_detail'),
     url(r'^api/', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    # bokeh plotting
+    url(r'^vis/$',
+        TemplateView.as_view(template_name='simple_chart.html'), name='simple_chart'),
 ]

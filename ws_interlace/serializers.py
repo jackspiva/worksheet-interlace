@@ -6,7 +6,7 @@ class WorksheetSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Worksheet
-        fields = ('title', 'description',)
+        fields = ('title', 'description', 'answers',)
 
 
 class AnswerSerializer(serializers.HyperlinkedModelSerializer):
