@@ -23,6 +23,5 @@ urlpatterns = [
     url(r'^api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     # bokeh plotting
-    url(r'^vis/$',
-        TemplateView.as_view(template_name='simple_chart.html'), name='simple_chart'),
+    url(r'^vis/$', views.simple_chart, name='vis'),
 ]

@@ -27,6 +27,7 @@ class Answer(models.Model):
     student = models.CharField(max_length=100, blank=True, default='')
     text = models.CharField(max_length=100, blank=True, default='')
     slug = models.SlugField(unique=True)
+    num = models.IntegerField(default=5)
 
     def save(self, *args, **kwargs):
         if not self.id:
@@ -34,7 +35,7 @@ class Answer(models.Model):
             self.slug = slugify(self.title)
 
         super(Answer, self).save(*args, **kwargs)
-    worksheet = models.ForeignKey(Worksheet)
+    worksheet = models.ForeignKey(Worksheet, related_name='answers')
 
 
 def get_image_path(instance, filename):

@@ -6,11 +6,11 @@ class WorksheetSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Worksheet
-        fields = ('title', 'description', 'answers',)
+        fields = ('title', 'description')
 
 
 class AnswerSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Answer
-        fields = ('title', 'description', 'student', 'text', 'worksheet',)
+        fields = ('title', 'description', 'student', 'text', 'worksheet', 'num',)
