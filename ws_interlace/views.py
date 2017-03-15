@@ -41,16 +41,9 @@ def index(request):
 def worksheet_detail(request, slug):
     worksheet = Worksheet.objects.get(slug=slug)
     answers = worksheet.answers.all()
+    ws_answers = worksheet.answers.all()
     return render(request, 'worksheets/worksheet_detail.html', {
         'worksheet': worksheet,
         'answers': answers,
-    })
-
-
-def simple_chart(request):
-    worksheet = Worksheet.objects.all()
-    answers = worksheet[0].answers.all()
-    return render(request, 'simple_chart.html', {
-        'worksheet': worksheet,
-        'answers': answers,
+        'ws_answers': ws_answers,
     })
