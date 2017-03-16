@@ -25,13 +25,6 @@ class AnswerViewSet(viewsets.ModelViewSet):
     queryset = Answer.objects.all()
     serializer_class = AnswerSerializer
 
-    def create(self, request, *args, **kwargs):
-        ws_name = request.data['worksheet']
-        request.data['worksheet'] = "/api/worksheets/%i/" % Worksheet.objects.filter(title=ws_name)[
-            0].pk
-        print(request.data['worksheet'])
-        return super(self.__class__, self).create(request, *args, **kwargs)
-
 
 def index(request):
     queryset = Worksheet.objects.all()

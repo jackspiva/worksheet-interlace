@@ -6,6 +6,9 @@ from ws_interlace.views import WorksheetViewSet, AnswerViewSet
 from rest_framework import renderers
 from django.views.generic import TemplateView
 from django.conf import settings
+from rest_framework_swagger.views import get_swagger_view
+
+schema_view = get_swagger_view(title='Worksheet API')
 
 
 router = DefaultRouter()
@@ -22,5 +25,5 @@ urlpatterns = [
         name='worksheet_detail'),
     url(r'^api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    # bokeh plotting
+    url(r'^api/docs/', schema_view),
 ]
