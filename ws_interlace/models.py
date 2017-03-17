@@ -21,6 +21,7 @@ class Answer(models.Model):
     text = models.CharField(max_length=100, blank=True, default='')
     num = models.IntegerField(default=0)
     worksheet = models.ForeignKey(Worksheet, related_name='answers', null=True)
+    img_url = models.CharField(max_length=100, blank=True)
 
 
 def get_image_path(instance, filename):
