@@ -7,7 +7,7 @@
     <div class="list-group">
         {% for worksheet in worksheets %}
             <a href="{% url 'worksheet_detail' pk=worksheet.pk %}" class="list-group-item">
-                {{ worksheet.title }}
+                {{ worksheet.name }}
             </a>
         {% endfor %}
     </div>
