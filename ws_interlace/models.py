@@ -7,14 +7,6 @@ class Worksheet(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=100, blank=True, default='')
     description = models.TextField(blank=True, null=True, default='')
-    slug = models.SlugField(unique=True)
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            # Newly created object, so set slug
-            self.slug = slugify(self.title)
-
-        super(Worksheet, self).save(*args, **kwargs)
 
     class Meta:
         ordering = ('created',)

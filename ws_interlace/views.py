@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from ws_interlace.models import Worksheet, Answer
 from ws_interlace.serializers import WorksheetSerializer, AnswerSerializer
 from django.shortcuts import render
+from django.views.generic.detail import DetailView
 
 
 class WorksheetViewSet(viewsets.ModelViewSet):
@@ -31,8 +32,8 @@ def index(request):
     return render(request, 'index.html', {'worksheets': queryset, })
 
 
-def worksheet_detail(request, slug):
-    worksheet = Worksheet.objects.get(slug=slug)
+def worksheet_detail(request, pk):
+    worksheet = Worksheet.objects.get(pk=pk)
     answers = worksheet.answers.all()
     ws_answers = worksheet.answers.all()
     return render(request, 'worksheets/worksheet_detail.html', {
