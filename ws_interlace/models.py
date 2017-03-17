@@ -18,15 +18,7 @@ class Answer(models.Model):
     description = models.TextField(blank=True, null=True, default='')
     student = models.CharField(max_length=100, blank=True, default='')
     text = models.CharField(max_length=100, blank=True, default='')
-    slug = models.SlugField(unique=True)
     num = models.IntegerField(default=5)
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            # Newly created object, so set slug
-            self.slug = slugify(self.title)
-
-        super(Answer, self).save(*args, **kwargs)
     worksheet = models.ForeignKey(Worksheet, related_name='answers', null=True)
 
 
