@@ -19,14 +19,14 @@
                     <tr>
                         <th>Student</th>
                         <th>Answer 1</th>
-                        <th>Answer 2</th>
+                        {# <th>Answer 2</th>#}
                     </tr>
                 </thead>
                 <tbody>
                     {% for answer in answers %}
                         <tr>
                             <td>{{ answer.student_name}}</td>
-                            <td>{{ answer.text }}</td>
+                            {# <td>{{ answer.text }}</td>#}
                             <td>{{ answer.num }}</td>
                         </tr>
                     {% endfor %}
@@ -54,7 +54,7 @@
                     data.addColumn('number', 'Answer');
 
                     {% for answer in ws_answers %}
-                        data.addRow(['{{answer.student_name }}', {{ answer.num }}]);
+                        data.addRow(['{{ answer.student_name }}', {{ answer.num }}]);
                     {% endfor %}
 
                     var options = {
@@ -84,7 +84,7 @@
                 }
             </script>
 
-            <!--Div that will hold the pie chart-->
+            <!--Div that will hold the bar chart-->
             <table class="table-bordered">
                 <tr>
                     <td>

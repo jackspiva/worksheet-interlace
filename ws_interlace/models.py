@@ -16,9 +16,11 @@ class Answer(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     section_id = models.CharField(max_length=100, blank=True, default='')
     section_name = models.CharField(max_length=100, blank=True, default='')
-    student_id = models.CharField(max_length=100, blank=True, default='')
     student_name = models.CharField(max_length=100, blank=True, default='')
     text = models.CharField(max_length=100, blank=True, default='')
+    # TODO: remove default to zero, also default empty strings on other
+    # fields, that way we can only use data from field if it is valid when
+    # creating bar chart and stuff
     num = models.IntegerField(default=0)
     worksheet = models.ForeignKey(Worksheet, related_name='answers', null=True)
     img_url = models.CharField(max_length=100, blank=True)

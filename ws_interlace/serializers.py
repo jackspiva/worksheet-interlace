@@ -6,8 +6,8 @@ class AnswerSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Answer
-        fields = ('student_name', 'student_id', 'section_name', 'section_id',
-                  'text', 'worksheet', 'num',)
+        fields = ('student_name', 'section_name', 'section_id',
+                  'text', 'worksheet', 'num', 'id',)
 
 
 class WorksheetSerializer(serializers.HyperlinkedModelSerializer):
@@ -15,7 +15,7 @@ class WorksheetSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Worksheet
-        fields = ('name', 'description', 'answers',)
+        fields = ('name', 'description', 'answers', 'id',)
 
     def create(self, validated_data):
         answers_data = validated_data.pop('answers')
