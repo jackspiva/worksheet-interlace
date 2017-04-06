@@ -7,7 +7,7 @@ class AnswerSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Answer
         fields = ('student_name', 'section_name', 'section_id',
-                  'text', 'worksheet', 'num', 'id',)
+                  'text', 'worksheet', 'num', 'id', 'img_url')
 
 
 class WorksheetSerializer(serializers.HyperlinkedModelSerializer):
