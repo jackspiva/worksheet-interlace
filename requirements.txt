@@ -26,4 +26,3 @@ six==1.10.0
 uritemplate==3.0.0
 waitress==1.0.2
 whitenoise==3.3.0
-psycopg2==2.6.1
