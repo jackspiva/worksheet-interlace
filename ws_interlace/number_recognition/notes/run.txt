@@ -1,0 +1,32 @@
+
+def main(argv):
+
+	imageName = "Crop-9.jpg"
+	
+	inputImagePath = os.path.join("images/raw/", imageName)
+	outputImagePath = os.path.join("images/labeled/", imageName)
+	
+
+	parse(trainedDigitsFile, inputImagePath, outputImagePath)
+
+	return
+
+def train(outputFile):
+	dataset = MLDataset()
+	dataset.load("MNIST Original")
+	labels, hogFeatures, pp = dataset.getAll()
+
+	# Create an linear SVM object
+	clf = LinearSVC()
+
+	# Perform the training
+	clf.fit(hogFeatures, labels)
+
+	# Save the classifier
+	joblib.dump((clf, pp), outputFile, compress=3)
+
+def parse(classifierFilePath, inputImagePath, outputImagePath):
+	parser = ImageParser()
+	parser.load(classifierFilePath, inputImagePath)
+	result = parser.parse(outputImagePath)
+	print(result)

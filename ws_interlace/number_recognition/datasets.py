@@ -2,8 +2,7 @@
 
 from sklearn import datasets
 from collections import Counter
-from enums import Datatypes
-from enum import Enum
+from ws_interlace.number_recognition.enums import Datatypes
 import numpy as np
 
 

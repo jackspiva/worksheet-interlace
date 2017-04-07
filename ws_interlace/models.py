@@ -4,6 +4,7 @@ from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 
+from ws_interlace.number_recognition.internal_api import parseNumberImage, test, trainDigits
 
 class Worksheet(models.Model):
     created = models.DateTimeField(auto_now_add=True)
@@ -32,7 +33,9 @@ def get_image_path(instance, filename):
     return '/'.join(['answer_images', instance.answer.main_view, filename])
 
 
-@receiver(post_save, sender=Worksheet)
+@receiver(post_save, sender=Answer)
 def begin_image_processing(sender, **kwargs):
     if kwargs.get('created', False):
-        print(kwargs.get('instance'))
+        ans = kwargs.get('instance')
+        result = parseNumberImage()
+        ans.num = result

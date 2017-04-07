@@ -1,14 +1,14 @@
 #!/usr/bin/python
 import os
+import numpy as np
 
 from sklearn.externals import joblib
 from sklearn.svm import LinearSVC
 
 from skimage.feature import hog
 from sklearn import preprocessing
-import numpy as np
 
-from enums import Datatypes
+from ws_interlace.number_recognition.enums import Datatypes
 
 class Classifier(object):
 	def __init__(
@@ -26,7 +26,7 @@ class Classifier(object):
 	def _saveToFile(self):
 		joblib.dump(
 			(self.classifier, self.preProcessing), 
-			os.path.join("classifiers/", self.outputFile), 
+			os.path.join("ws_interlace/number_recognition/classifiers/", self.outputFile), 
 			compress=3)
 
 

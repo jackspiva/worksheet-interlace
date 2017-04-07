@@ -1,11 +1,12 @@
 #!/usr/bin/python
 
+import os
 import cv2
 from sklearn.externals import joblib
 from skimage.feature import hog
 import numpy as np
 
-from enums import Color, Datatypes
+from ws_interlace.number_recognition.enums import Color, Datatypes
 
 class ImageParser(object):
 	def __init__(self):
@@ -14,7 +15,8 @@ class ImageParser(object):
 		self.__image		= None
 
 	def load(self, classifierFilePath, dataImagePath):
-		self.__classifier, self.__pp = joblib.load(classifierFilePath)
+		self.__classifier, self.__pp =  joblib.load(
+			os.path.join("ws_interlace/number_recognition/classifiers/", classifierFilePath))
 		self.__image = cv2.imread(dataImagePath)
 
 	def parse(self, outputImagePath):
@@ -26,7 +28,7 @@ class ImageParser(object):
 		result = self._parseRectangles(contourRectangles, imageThreshold)
 
 		cv2.imwrite(outputImagePath, self.__image)
-		
+
 		return result
 
 	def _getGrayscale(self):
@@ -121,6 +123,7 @@ class ImageParser(object):
 					iterations 	= 1)
 
 	def _parseRectangles(self, rectangles, imageThreshold):
+		rectangle_values = []
 		for x, y, width, height in rectangles:
 			""" Draw the rectangles """
 			cv2.rectangle(
@@ -134,6 +137,9 @@ class ImageParser(object):
 			roi = self._getROI(x, y, width, height, imageThreshold)
 			number = self._predict(roi)
 
+			""" Append left point and number, to sort left points """
+			rectangle_values.append((x,number)) 
+
 			""" Label image with prediction """
 			cv2.putText(
 				img 				= self.__image, 
@@ -144,3 +150,5 @@ class ImageParser(object):
 				color 				= Color.RED,
 				thickness 			= 2,
 				bottomLeftOrigin 	= False)
+
+		return rectangle_values
