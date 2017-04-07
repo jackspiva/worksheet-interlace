@@ -1,6 +1,8 @@
 from __future__ import unicode_literals
 from django.template.defaultfilters import slugify
 from django.db import models
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 
 class Worksheet(models.Model):
@@ -28,3 +30,9 @@ class Answer(models.Model):
 
 def get_image_path(instance, filename):
     return '/'.join(['answer_images', instance.answer.main_view, filename])
+
+
+@receiver(post_save, sender=Worksheet)
+def begin_image_processing(sender, **kwargs):
+    if kwargs.get('created', False):
+        print(kwargs.get('instance'))
