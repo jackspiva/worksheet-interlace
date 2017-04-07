@@ -36,8 +36,8 @@ def get_image_path(instance, filename):
     return '/'.join(['answer_images', instance.answer.id, filename])
 
 
-@receiver(post_save, sender=Worksheet)
+@receiver(post_save, sender=Answer)
 def begin_image_processing(sender, **kwargs):
     if kwargs.get('created', False):
-        ws = kwargs.get('instance')
-        print()
+        ans = kwargs.get('instance')
+        ans.num = 999

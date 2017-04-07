@@ -6,9 +6,6 @@ import urllib
 
 
 def get_remote_image(ans):
-    print("Downloading image")
-    print(ans)
-    print(ans.image_url)
     if ans.image_url and not ans.image_file:
         result = urllib.urlretrieve(ans.image_url)
         ans.image_file.save(
