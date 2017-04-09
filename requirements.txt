@@ -1,4 +1,4 @@
-appdirs==1.4.0
+appdirs==1.4.3
 autopep8==1.2.4
 coreapi==2.2.4
 coreschema==0.0.4
@@ -26,4 +26,4 @@ six==1.10.0
 uritemplate==3.0.0
 waitress==1.0.2
 whitenoise==3.3.0
-psycopg2==2.6.1
+gunicorn==19.6.0
