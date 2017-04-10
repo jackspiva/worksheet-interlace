@@ -2,6 +2,7 @@ from rest_framework import serializers
 from ws_interlace.models import Worksheet, Answer
 from django.core.files import File
 import os
+<<<<<<< HEAD
 import urllib
 
 
@@ -18,11 +19,6 @@ def get_remote_image(ans):
 
 class AnswerSerializer(serializers.HyperlinkedModelSerializer):
 
-    #def create(self, validated_data):
-    #    print("GET REMOVE IMAGE")
-    #    answer = Answer.objects.create(**validated_data)
-    #    #get_remote_image(answer)
-    #    return answer
 
     class Meta:
         model = Answer

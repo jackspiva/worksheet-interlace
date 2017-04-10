@@ -5,9 +5,22 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.core.files import File
 import os
+<<<<<<< HEAD
 from urllib.request import urlretrieve
 
 from ws_interlace.number_recognition.internal_api import parseNumberImage, parseCustomNumberImage, test, trainDigits
+=======
+from ws_interlace.number_recognition.internal_api import parseNumberImage, test, trainDigits
+from io import BytesIO
+from urllib.request import urlopen
+
+
+def get_remote_image(ans):
+    if ans.image_url and not ans.image_file:
+        response = urlopen(ans.image_url)
+        io = BytesIO(response.read())
+        ans.image_file.save(os.path.basename(ans.image_url), File(io))
+        ans.save()
 
 class Worksheet(models.Model):
     created = models.DateTimeField(auto_now_add=True)
@@ -42,11 +55,9 @@ def get_image_path(instance, filename):
 def begin_image_processing(sender, **kwargs):
     if kwargs.get('created', False):
         ans = kwargs.get('instance')
-        #get_remote_image(ans)
-        #result = parseCustomNumberImage(ans.image_file)
-        result = parseNumberImage()
-        print(result)
-        print(ans.num)
+        get_remote_image(ans)
+        print("FILE:", ans.image_file)
+        result = parseNumberImage(ans.image_file)
         ans.num = result
 
 
