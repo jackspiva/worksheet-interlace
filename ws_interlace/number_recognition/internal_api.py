@@ -26,6 +26,17 @@ def parseNumberImage():
 	numberList = [int(i[1]) for i in locNumberList]
 	return int(''.join(map(str,numberList)))
 
+def parseCustomNumberImage(pathToImg):
+	print("parseCustomNumberImage()")
+	print(pathToImg)
+	outputImagePath = os.path.join("ws_interlace/number_recognition/images/labeled/", "demoOutput.png")
+	trainedDigitsFile = "hog_svm_digits_cls.pkl"
+	locNumberList = parse(trainedDigitsFile, pathToImg, outputImagePath)
+	
+	""" Sort tuples by 1st elem, return joined list of just 2nd elem"""
+	locNumberList.sort(key=lambda tup: tup[0])
+	numberList = [int(i[1]) for i in locNumberList]
+	return int(''.join(map(str,numberList)))
 
 def trainDigits():
 	print("Loading NIST Dataset")

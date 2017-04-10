@@ -6,6 +6,7 @@ import urllib
 
 
 def get_remote_image(ans):
+    print("SAVE THIS:" + str(ans.image_url))
     if ans.image_url and not ans.image_file:
         result = urllib.urlretrieve(ans.image_url)
         ans.image_file.save(
@@ -17,10 +18,11 @@ def get_remote_image(ans):
 
 class AnswerSerializer(serializers.HyperlinkedModelSerializer):
 
-    def create(self, validated_data):
-        answer = Answer.objects.create(**validated_data)
-        get_remote_image(answer)
-        return answer
+    #def create(self, validated_data):
+    #    print("GET REMOVE IMAGE")
+    #    answer = Answer.objects.create(**validated_data)
+    #    #get_remote_image(answer)
+    #    return answer
 
     class Meta:
         model = Answer
