@@ -11,13 +11,13 @@ from io import BytesIO
 from urllib.request import urlopen
 
 
-
 def get_remote_image(ans):
     if ans.image_url and not ans.image_file:
         response = urlopen(ans.image_url)
         io = BytesIO(response.read())
         ans.image_file.save(os.path.basename(ans.image_url), File(io))
         ans.save()
+
 
 class Worksheet(models.Model):
     created = models.DateTimeField(auto_now_add=True)
@@ -55,3 +55,4 @@ def begin_image_processing(sender, **kwargs):
         print("FILE:", ans.image_file)
         result = parseNumberImage(ans.image_file)
         ans.num = result
+        ans.save()
