@@ -16,8 +16,9 @@ def parseNumberImage(imageName):
     print("parseNumberImage()")
     linearClassifierDigitsFile = "svm_digits_cls.pkl"
     hogLinearClassifierDigitsFile = "hog_svm_digits_cls.pkl"
-    inputImagePath = os.path.join(
-        "ws_interlace/number_recognition/images/raw/", str(imageName))
+    inputImagePath = "/Users/johnspiva/Google Drive/Programming/worksheet-project/media/" + \
+        str(imageName)
+    print("**********", inputImagePath)
     outputImagePath = os.path.join(
         "ws_interlace/number_recognition/images/labeled/", str(imageName))
     trainedDigitsFile = hogLinearClassifierDigitsFile
