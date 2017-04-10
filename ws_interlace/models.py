@@ -19,7 +19,7 @@ def get_remote_image(ans):
         ans.save()
 
 
-class Worksheet(models.Model):
+class Section(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=100, unique=True, default='')
     description = models.TextField(blank=True, null=True, default='')
@@ -30,7 +30,7 @@ class Worksheet(models.Model):
 
 class Answer(models.Model):
     created = models.DateTimeField(auto_now_add=True)
-    section_id = models.CharField(max_length=100, blank=True, default='')
+    section_type = models.CharField(max_length=100, blank=True, default='')
     section_name = models.CharField(max_length=100, blank=True, default='')
     student_name = models.CharField(max_length=100, blank=True, default='')
     text = models.CharField(max_length=100, blank=True, default='')
@@ -38,7 +38,7 @@ class Answer(models.Model):
     # fields, that way we can only use data from field if it is valid when
     # creating bar chart and stuff
     num = models.IntegerField(default=0)
-    worksheet = models.ForeignKey(Worksheet, related_name='answers', null=True)
+    section = models.ForeignKey(Section, related_name='answers', null=True)
     image_file = models.ImageField(upload_to='images', default='')
     image_url = models.URLField(default='')
 
