@@ -16,11 +16,14 @@ def parseNumberImage(imageName):
     print("parseNumberImage()")
     linearClassifierDigitsFile = "svm_digits_cls.pkl"
     hogLinearClassifierDigitsFile = "hog_svm_digits_cls.pkl"
-    inputImagePath = "/Users/johnspiva/Google Drive/Programming/worksheet-project/media/" + \
-        str(imageName)
+    
+    inputImagePath = os.path.join("media/", str(imageName))
     print("**********", inputImagePath)
-    outputImagePath = os.path.join(
-        "ws_interlace/number_recognition/images/labeled/", str(imageName))
+    
+    ## This still isn't outputing to the proper location to see the labeled images for debugging
+    outputImagePath = os.path.join("media/", str(imageName))
+    print("**********", outputImagePath)
+
     trainedDigitsFile = hogLinearClassifierDigitsFile
     locNumberList = parse(trainedDigitsFile, inputImagePath, outputImagePath)
 
@@ -29,6 +32,7 @@ def parseNumberImage(imageName):
     numberList = [int(i[1]) for i in locNumberList]
     return int(''.join(map(str, numberList)))
 
+## This is no longer needed
 def parseCustomNumberImage(pathToImg):
 	print("parseCustomNumberImage()")
 	print(pathToImg)

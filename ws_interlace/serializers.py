@@ -2,7 +2,6 @@ from rest_framework import serializers
 from ws_interlace.models import Worksheet, Answer
 from django.core.files import File
 import os
-<<<<<<< HEAD
 import urllib
 
 

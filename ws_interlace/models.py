@@ -4,15 +4,12 @@ from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.core.files import File
+from django.conf import settings
 import os
-<<<<<<< HEAD
-from urllib.request import urlretrieve
-
-from ws_interlace.number_recognition.internal_api import parseNumberImage, parseCustomNumberImage, test, trainDigits
-=======
 from ws_interlace.number_recognition.internal_api import parseNumberImage, test, trainDigits
 from io import BytesIO
 from urllib.request import urlopen
+
 
 
 def get_remote_image(ans):
@@ -50,7 +47,6 @@ def get_image_path(instance, filename):
     return '/'.join(['answer_images', instance.answer.id, filename])
 
 
-
 @receiver(post_save, sender=Answer)
 def begin_image_processing(sender, **kwargs):
     if kwargs.get('created', False):
@@ -59,14 +55,3 @@ def begin_image_processing(sender, **kwargs):
         print("FILE:", ans.image_file)
         result = parseNumberImage(ans.image_file)
         ans.num = result
-
-
-def get_remote_image(ans):
-    print("SAVE THIS:" + str(ans.image_url))
-    if ans.image_url and not ans.image_file:
-        result = urlretrieve(ans.image_url)
-        ans.image_file.save(
-            os.path.basename(ans.image_url),
-            File(open(result[0]))
-        )
-        ans.save()
