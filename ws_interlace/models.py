@@ -23,6 +23,7 @@ class Section(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=100, unique=True, default='')
     description = models.TextField(blank=True, null=True, default='')
+    section_type = models.CharField(max_length=100, blank=True, default='')
 
     class Meta:
         ordering = ('created',)
@@ -30,13 +31,9 @@ class Section(models.Model):
 
 class Answer(models.Model):
     created = models.DateTimeField(auto_now_add=True)
-    section_type = models.CharField(max_length=100, blank=True, default='')
-    section_name = models.CharField(max_length=100, blank=True, default='')
+    student_id = models.IntegerField(null=True)
     student_name = models.CharField(max_length=100, blank=True, default='')
     text = models.CharField(max_length=100, blank=True, default='')
-    # TODO: remove default to zero, also default empty strings on other
-    # fields, that way we can only use data from field if it is valid when
-    # creating bar chart and stuff
     num = models.IntegerField(default=0)
     section = models.ForeignKey(Section, related_name='answers', null=True)
     image_file = models.ImageField(upload_to='images', default='')

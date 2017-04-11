@@ -1,0 +1,248 @@
+swagger: '2.0'
+info:
+  description: |
+    
+  version: 1.0.0
+  title: Worksheet Project
+
+# host: petstore.swagger.io
+# basePath: /v2
+
+# schemes:
+# - http
+paths:
+  /answer:
+    post:
+      tags:
+      - answer
+      summary: Add a new answer to a section
+      operationId: addAnswer
+      consumes:
+      - application/json
+      - application/xmlr
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: body
+        description: Answer object that needs to be added
+        required: true
+        schema:
+          $ref: '#/definitions/Answer'
+      responses:
+        400:
+          description: invalid answer
+    put:
+      tags:
+      - answer
+      summary: Update an existing answer
+      operationId: updateAnswer
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: body
+        description: A set of images containing students' answers to one section of a worksheet. 
+        required: true
+        schema:
+          $ref: '#/definitions/Answer'
+      responses:
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Answer not found
+        405:
+          description: Validation exception
+  /answer/{answerId}:
+    get:
+      tags:
+      - answer
+      summary: Find answer by ID
+      description: Returns a single answer
+      operationId: getAnswerById
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: answerId
+        in: path
+        description: ID of answer to return
+        required: true
+        type: integer
+        format: int64
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Answer'
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Answer not found
+    delete:
+      tags:
+      - answer
+      summary: Deletes a answer
+      operationId: deleteAnswer
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: api_key
+        in: header
+        required: false
+        type: string
+      - name: answerId
+        in: path
+        description: Answer id to delete
+        required: true
+        type: integer
+        format: int64
+      responses:
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Answer not found
+  /section:
+    post:
+      tags:
+      - section
+      summary: Add a new section to a worksheet
+      operationId: addSection
+      consumes:
+      - application/json
+      - application/xmlr
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: body
+        description: Section object that needs to be added
+        required: true
+        schema:
+          $ref: '#/definitions/Section'
+      responses:
+        400:
+          description: invalid section
+    put:
+      tags:
+      - section
+      summary: Update an existing section
+      operationId: updateSection
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: body
+        description: |
+        required: true
+        schema:
+          $ref: '#/definitions/Section'
+      responses:
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Section not found
+        405:
+          description: Validation exception
+  /section/{sectionId}:
+    get:
+      tags:
+      - section
+      summary: Find section by ID
+      description: Returns a single section
+      operationId: getSectionById
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: sectionId
+        in: path
+        description: ID of section to return
+        required: true
+        type: integer
+        format: int64
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Section'
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Section not found
+    delete:
+      tags:
+      - section
+      summary: Deletes a section
+      operationId: deleteSection
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: api_key
+        in: header
+        required: false
+        type: string
+      - name: sectionId
+        in: path
+        description: Section id to delete
+        required: true
+        type: integer
+        format: int64
+      responses:
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Section not found
+definitions:
+  Answer:
+    type: object
+    required:
+    - student_id
+    - image_url
+    properties:
+      student_id:
+        type: integer
+      student_name:
+        type: string
+      num:
+        type: integer
+      section:
+        type: object
+      image_url:
+        type: string
+      image_file:
+        type: string
+  Section:
+    type: object
+    required:
+    - name
+    - section_type
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      section_type:
+        type: string
+
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /johnspiva/worksheet/1.0.0
+schemes:
+ - https
+ - http

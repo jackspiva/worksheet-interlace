@@ -9,7 +9,8 @@ from django.conf import settings
 from rest_framework_swagger.views import get_swagger_view
 
 
-schema_view = get_swagger_view(title='Section API')
+schema_view = get_swagger_view(
+    title='Worksheet Project API', url='static/api.yaml')
 
 router = DefaultRouter()
 router.register(r'sections', views.SectionViewSet)
