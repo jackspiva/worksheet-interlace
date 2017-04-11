@@ -5,7 +5,7 @@
     {{ block.super }}
 {% endblock title %}
 {% block content %}
-    <div class="panel panel-default" style="width: 75%; margin-left: 2%;">
+    <div class="panel panel-default" style="width: 75%; margin-left: 2%; padding: 1%;">
         <!-- Default panel contents -->
         <div class="panel-heading">
             <h3 class="panel-title">{{ section.name }}
@@ -15,7 +15,7 @@
             <p>{{ section.description }}</p>
         </div>
         {% if answers %}
-            <table class=" table table-inverse">
+            <table id="wstable" class=" table table-inverse">
                 <thead>
                     <tr>
                         <th>Student</th>
@@ -88,11 +88,57 @@
 
                 }
             </script>
+            <script>
+                $(document).ready(function () {
+                    $('#wstable').DataTable();
+                });
+            </script>
+            <script src="Chart.js">
+                var ctx = document.getElementById("myChart");
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: [
+                            "Red",
+                            "Blue",
+                            "Yellow",
+                            "Green",
+                            "Purple",
+                            "Orange"
+                        ],
+                        datasets: [
+                            {
+                                label: '# of Votes',
+                                data: [
+                                    12,
+                                    19,
+                                    3,
+                                    5,
+                                    2,
+                                    3
+                                ]
+                            }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [
+                                {
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                });
+            </script>
 
             <!--Div that will hold the bar chart-->
 
             <div class="panel-body chart">
                 <div id="chart_div" style="margin: 50px; "></div>
+                <canvas id="myChart" width="400" height="400"></canvas>
             </div>
 
         </div>

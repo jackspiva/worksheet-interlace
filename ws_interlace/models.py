@@ -19,11 +19,18 @@ def get_remote_image(ans):
         ans.save()
 
 
+class Worksheet(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(max_length=100, unique=True, default='')
+
+
 class Section(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=100, unique=True, default='')
     description = models.TextField(blank=True, null=True, default='')
     section_type = models.CharField(max_length=100, blank=True, default='')
+    worksheet = models.ForeignKey(
+        Worksheet, related_name='sections', null=True)
 
     class Meta:
         ordering = ('created',)

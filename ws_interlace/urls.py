@@ -6,11 +6,7 @@ from ws_interlace.views import SectionViewSet, AnswerViewSet
 from rest_framework import renderers
 from django.views.generic import TemplateView, DetailView
 from django.conf import settings
-from rest_framework_swagger.views import get_swagger_view
 
-
-schema_view = get_swagger_view(
-    title='Worksheet Project API', url='static/api.yaml')
 
 router = DefaultRouter()
 router.register(r'sections', views.SectionViewSet)
@@ -26,6 +22,6 @@ urlpatterns = [
         name='section_detail'),
     url(r'^api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^api/docs/', schema_view),
+    url(r'^api/docs/', TemplateView.as_view(template_name='docs/docs.html'), name='docs'),
 
 ]
