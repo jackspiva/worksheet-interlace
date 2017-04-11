@@ -51,12 +51,12 @@ def get_image_path(instance, filename):
     return '/'.join(['answer_images', instance.answer.id, filename])
 
 
-@receiver(post_save, sender=Answer)
-def begin_image_processing(sender, **kwargs):
-    if kwargs.get('created', False):
-        ans = kwargs.get('instance')
-        get_remote_image(ans)
-        print("FILE:", ans.image_file)
-        result = parseNumberImage(ans.image_file)
-        ans.num = result
-        ans.save()
+# @receiver(post_save, sender=Answer)
+# def begin_image_processing(sender, **kwargs):
+#     if kwargs.get('created', False):
+#         ans = kwargs.get('instance')
+#         get_remote_image(ans)
+#         print("FILE:", ans.image_file)
+#         result = parseNumberImage(ans.image_file)
+#         ans.num = result
+#         ans.save()

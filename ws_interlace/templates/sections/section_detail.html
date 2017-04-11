@@ -41,106 +41,58 @@
                 <h3 class="panel-title">Charts</h3>
             </div>
             <script type="text/javascript">
-                // Load the Visualization API and the corechart package.
-                google.charts.load('current', {
-                    'packages': ['bar', 'corechart']
-                });
-
-                // Set a callback to run when the Google Visualization API is loaded.
-                google.charts.setOnLoadCallback(drawChart);
-
-                // Callback that creates and populates a data table, instantiates the pie chart, passes in the data and draws it.
-                function drawChart() {
-
-                    // Create the data table.
-                    var data = new google.visualization.DataTable();
-
-                    data.addColumn('string', 'Student');
-                    data.addColumn('number', 'Answer');
-
-                    {% for answer in ws_answers %}
-                        data.addRow(['{{ answer.student_name }}', {{ answer.num }}]);
-                    {% endfor %}
-
-                    var options = {
-                        chart: {
-                            title: ''
-                        },
-                        bars: 'horizontal',
-                        width: 300,
-                        height: 170,
-                        legend: {
-                            position: 'none'
-                        },
-                        axes: {
-                            y: {
-                                0: {
-                                    side: 'top',
-                                    label: ''
-                                } // Top x-axis.
-                            }
-                        }
-                    };
-
-                    // Instantiate and draw our chart, passing in some options.
-                    var chart = new google.charts.Bar(document.getElementById('chart_div'));
-                    chart.draw(data, google.charts.Bar.convertOptions(options));
-
-                }
-            </script>
-            <script>
                 $(document).ready(function () {
                     $('#wstable').DataTable();
                 });
             </script>
-            <script src="Chart.js">
+
+            <div class="panel-body chart">
+                <canvas id="myChart" width="200" height="75"></canvas>
+            </div>
+            <script type="text/javascript">
+                var labels = [];
+                var data = [];
+                {% for answer in ws_answers %}
+                    labels.push('{{ answer.student_name }}');
+                    data.push({{ answer.num }});
+                {% endfor %}
+                console.log(data);
+                console.log(labels);
                 var ctx = document.getElementById("myChart");
+                var poolColors = function (a) {
+                    var pool = [];
+                    for (i = 0; i < a; i++) {
+                        pool.push(dynamicColors());
+                    }
+                    return pool;
+                };
+                var dynamicColors = function () {
+                    var r = Math.floor(Math.random() * 255);
+                    var g = Math.floor(Math.random() * 255);
+                    var b = Math.floor(Math.random() * 255);
+                    return "rgb(" + r + "," + g + "," + b + ")";
+                };
                 var myChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: [
-                            "Red",
-                            "Blue",
-                            "Yellow",
-                            "Green",
-                            "Purple",
-                            "Orange"
-                        ],
+                        labels,
                         datasets: [
                             {
-                                label: '# of Votes',
-                                data: [
-                                    12,
-                                    19,
-                                    3,
-                                    5,
-                                    2,
-                                    3
-                                ]
+                                backgroundColor: poolColors(data.length),
+                                data
                             }
                         ]
                     },
                     options: {
-                        scales: {
-                            yAxes: [
-                                {
-                                    ticks: {
-                                        beginAtZero: true
-                                    }
-                                }
-                            ]
+                        legend: {
+                            display: false,
+                            labels: {
+                                display: false
+                            }
                         }
                     }
                 });
             </script>
-
-            <!--Div that will hold the bar chart-->
-
-            <div class="panel-body chart">
-                <div id="chart_div" style="margin: 50px; "></div>
-                <canvas id="myChart" width="400" height="400"></canvas>
-            </div>
-
         </div>
 
     {% endif %}

@@ -20,8 +20,8 @@ class AnswerSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Answer
-        fields = ('student_name', 'section_name', 'section_type',
-                  'text', 'section', 'num', 'id', 'image_url', 'image_file')
+        fields = ('student_id', 'student_name', 'text', 'section',
+                  'num', 'id', 'image_url', 'image_file')
 
 
 class SectionSerializer(serializers.HyperlinkedModelSerializer):
