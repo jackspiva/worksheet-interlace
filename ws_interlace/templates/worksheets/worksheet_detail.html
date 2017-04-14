@@ -38,17 +38,6 @@
                                         <th>Answer</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    {% for answer in answers %}
-                                        <tr>
-                                            <td>{{ answer.student_name}}</td>
-                                            <td>
-                                                <a href="{{ answer.image_url }}">{{ answer.image_url }}</a>
-                                            </td>
-                                            <td>{{ answer.num }}</td>
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -74,7 +63,7 @@
             $('#section_table').DataTable( {
               scrollY:        300,
               scrollCollapse: true,
-              paging:         false
+              paging:         false,
             });
         });
     </script>
