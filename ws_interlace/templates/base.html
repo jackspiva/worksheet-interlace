@@ -80,7 +80,12 @@
                                     <i class="fa fa-fw fa-caret-down"></i>
                                 </a>
                                 {% if secs|get_item:ws.name %}
-                                    <ul id="{{ forloop.counter }}_ul" >
+                                {% if ws.id == worksheet.id %}
+                                      <ul id="{{ forloop.counter }}_ul">
+                                      {% else %}
+                                        <ul id="{{ forloop.counter }}_ul" class="collapse">
+                                        {% endif %}
+
                                         {% for sec in secs|get_item:ws.name  %}
                                               <li>
                                                 <a href="{% url 'worksheet_detail' pk=ws.id sect_id=sec.id %}">{{ sec.name }}</a>

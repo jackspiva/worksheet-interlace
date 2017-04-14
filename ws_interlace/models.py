@@ -33,7 +33,7 @@ class Worksheet(models.Model):
 
 class Section(models.Model):
     created = models.DateTimeField(auto_now_add=True)
-    name = models.CharField(max_length=100, unique=True, default='')
+    name = models.CharField(max_length=100, default='')
     description = models.TextField(blank=True, null=True, default='')
     section_type = models.CharField(max_length=100, blank=True, default='')
     worksheet = models.ForeignKey(
