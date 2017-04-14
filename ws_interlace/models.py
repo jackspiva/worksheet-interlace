@@ -1,14 +1,20 @@
-from __future__ import unicode_literals
+# stdlib imports
+import os
+from io import BytesIO
+
+# core django imports
 from django.template.defaultfilters import slugify
 from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.core.files import File
 from django.conf import settings
-import os
-from ws_interlace.number_recognition.internal_api import parseNumberImage, test, trainDigits
-from io import BytesIO
+
+# 3rd party app imports
 from urllib.request import urlopen
+
+# imports from my apps
+from ws_interlace.number_recognition.internal_api import parseNumberImage, test, trainDigits
 
 
 def get_remote_image(ans):
@@ -22,6 +28,7 @@ def get_remote_image(ans):
 class Worksheet(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=100, unique=True, default='')
+    description = models.TextField(blank=True, null=True, default='')
 
 
 class Section(models.Model):
@@ -30,7 +37,7 @@ class Section(models.Model):
     description = models.TextField(blank=True, null=True, default='')
     section_type = models.CharField(max_length=100, blank=True, default='')
     worksheet = models.ForeignKey(
-        Worksheet, related_name='sections', null=True)
+        Worksheet, related_name='sections', null=True, blank=True)
 
     class Meta:
         ordering = ('created',)
@@ -42,7 +49,8 @@ class Answer(models.Model):
     student_name = models.CharField(max_length=100, blank=True, default='')
     text = models.CharField(max_length=100, blank=True, default='')
     num = models.IntegerField(default=0)
-    section = models.ForeignKey(Section, related_name='answers', null=True)
+    section = models.ForeignKey(
+        Section, related_name='answers', null=True, blank=True)
     image_file = models.ImageField(upload_to='images', default='')
     image_url = models.URLField(default='')
 

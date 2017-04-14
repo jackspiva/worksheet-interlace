@@ -11,21 +11,38 @@
                 Worksheet Interlace Project
             {% endblock title %}
         </title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/dt-1.10.13/b-1.2.4/b-colvis-1.2.4/cr-1.3.2/r-2.1.1/datatables.min.css"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
         {% block header %}{% endblock header %}
         <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/dt-1.10.13/b-1.2.4/b-colvis-1.2.4/cr-1.3.2/r-2.1.1/datatables.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
         <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        {% load static %}
+        <script type="text/javascript" src="{% static 'js/bargraph.js' %}"></script>
+
+        <!-- Custom CSS -->
+        <link href="{% static 'css/sb-admin.css' %}" rel="stylesheet">
+
+        <!-- Morris Charts CSS -->
+        <link href="{% static 'css/plugins/morris.css' %}" rel="stylesheet">
+
+        <!-- Custom Fonts -->
+        <link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+
+        <!-- Morris Charts JavaScript -->
+        {# <script src="{% static 'js/plugins/morris/raphael.min.js' %}"></script>#}
+        {# <script src="{% static 'js/plugins/morris/morris.min.js' %}"></script>#}
+        {# <script src="{% static 'js/plugins/morris/morris-data.js' %}"></script>#}
 
     </head>
 
     <body>
-        <header>
-            <nav class="navbar navbar-default">
+        <div id="wrapper">
+            <nav class="navbar navbar-inverse navbar-fixed-top" role:"navigation">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-ex1-collapse" aria-expanded="false">
                             <span class="sr-only">Toggle navigation</span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
@@ -48,10 +65,43 @@
                         </ul>
                     </div>
                 </div>
+                {% load ws_extras %}
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav side-nav">
+                        {% for ws in worksheets %}
+                        {% if ws.id == worksheet.id %}
+                            <li class="active">
+                              {% else %}
+                              <li>
+                                {% endif %}
+                                <a href="javascript:;" data-toggle="collapse" data-target="#{{ forloop.counter }}_ul">
+                                    <i class="fa fa-fw fa-arrows-v"></i>
+                                    {{ ws.name }}
+                                    <i class="fa fa-fw fa-caret-down"></i>
+                                </a>
+                                {% if secs|get_item:ws.name %}
+                                    <ul id="{{ forloop.counter }}_ul" >
+                                        {% for sec in secs|get_item:ws.name  %}
+                                              <li>
+                                                <a href="{% url 'worksheet_detail' pk=ws.id sect_id=sec.id %}">{{ sec.name }}</a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </li>
+
+                        {% endfor %}
+                    </ul>
+                </div>
             </nav>
-        </header>
-        {% block content %}{% endblock content %}
-        {% block footer %}{% endblock footer %}
+
+            {% block content %}{% endblock content %}
+            {% block footer %}{% endblock footer %}
+        </div>
     </body>
+
+</html>
+}
+</body>
 
 </html>

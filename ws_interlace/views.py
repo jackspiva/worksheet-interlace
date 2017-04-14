@@ -1,12 +1,23 @@
+from django.shortcuts import render
+from django.views.generic.detail import DetailView
+
 from rest_framework import permissions
 from rest_framework import renderers
 from rest_framework import viewsets
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
-from ws_interlace.models import Section, Answer
-from ws_interlace.serializers import SectionSerializer, AnswerSerializer
-from django.shortcuts import render
-from django.views.generic.detail import DetailView
+
+from .models import Worksheet, Section, Answer
+from .serializers import SectionSerializer, AnswerSerializer, WorksheetSerializer
+
+
+class WorksheetViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+    """
+    queryset = Worksheet.objects.all()
+    serializer_class = WorksheetSerializer
 
 
 class SectionViewSet(viewsets.ModelViewSet):
@@ -28,16 +39,32 @@ class AnswerViewSet(viewsets.ModelViewSet):
 
 
 def index(request):
-    queryset = Section.objects.all()
-    return render(request, 'index.html', {'sections': queryset, })
+    worksheets = Worksheet.objects.all()
+    sec = {}
+    for ws in worksheets:
+        sec[ws.name] = list(Section.objects.filter(worksheet=ws))
+
+    print(sec[worksheets[0].name])
+    return render(request, 'index.html', {'worksheets': worksheets, 'secs': sec})
 
 
-def section_detail(request, pk):
-    section = Section.objects.get(pk=pk)
-    answers = section.answers.all()
-    ws_answers = section.answers.all()
-    return render(request, 'sections/section_detail.html', {
+def worksheet_detail(request, pk, sect_id):
+    worksheets = Worksheet.objects.all()
+    worksheet = Worksheet.objects.get(pk=pk)
+    sec = {}
+    for ws in worksheets:
+        sec[ws.name] = list(Section.objects.filter(worksheet=ws))
+        print(sec[ws.name])
+
+    sections = Section.objects.filter(worksheet=worksheet)
+    sections = list(sections)
+    section = Section.objects.get(pk=sect_id)
+    answers = list(Answer.objects.filter(section=section))
+
+    return render(request, 'worksheets/worksheet_detail.html', {
+        'worksheets': worksheets,
+        'worksheet': worksheet,
         'section': section,
-        'answers': answers,
-        'ws_answers': ws_answers,
+        'secs': sec,
+        'answers': answers
     })

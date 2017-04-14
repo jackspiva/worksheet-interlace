@@ -4,11 +4,7 @@
     {{ block.super }}
 {% endblock title %}
 {% block content %}
-    <div class="list-group">
-        {% for section in sections %}
-            <a href="{% url 'section_detail' pk=section.id %}" class="list-group-item">
-                {{ section.name }}
-            </a>
-        {% endfor %}
+
+    <div class="list-group" style="width: 75%; margin-left: 2%; padding: 1%;">
     </div>
 {% endblock content %}

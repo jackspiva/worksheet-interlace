@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'ws_interlace',
-    'rest_framework_swagger',
 ]
 REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
