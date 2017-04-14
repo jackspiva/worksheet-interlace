@@ -14,27 +14,14 @@
         <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/dt-1.10.13/b-1.2.4/b-colvis-1.2.4/cr-1.3.2/r-2.1.1/datatables.min.css"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <link href="{% static 'css/sb-admin.css' %}" rel="stylesheet">
+        <link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
         {% block header %}{% endblock header %}
         <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/dt-1.10.13/b-1.2.4/b-colvis-1.2.4/cr-1.3.2/r-2.1.1/datatables.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
         <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         {% load static %}
         <script type="text/javascript" src="{% static 'js/bargraph.js' %}"></script>
-
-        <!-- Custom CSS -->
-        <link href="{% static 'css/sb-admin.css' %}" rel="stylesheet">
-
-        <!-- Morris Charts CSS -->
-        <link href="{% static 'css/plugins/morris.css' %}" rel="stylesheet">
-
-        <!-- Custom Fonts -->
-        <link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
-
-        <!-- Morris Charts JavaScript -->
-        {# <script src="{% static 'js/plugins/morris/raphael.min.js' %}"></script>#}
-        {# <script src="{% static 'js/plugins/morris/morris.min.js' %}"></script>#}
-        {# <script src="{% static 'js/plugins/morris/morris-data.js' %}"></script>#}
-
     </head>
 
     <body>
@@ -93,14 +80,10 @@
                     </ul>
                 </div>
             </nav>
-
             {% block content %}{% endblock content %}
             {% block footer %}{% endblock footer %}
         </div>
     </body>
-
 </html>
-}
 </body>
-
 </html>
