@@ -97,11 +97,25 @@ def get_answers(request):
     print("SECTION NAME: ", sec_id)
     sec = Section.objects.get(id=sec_id)
     answer_list = list(Answer.objects.filter(section=sec))
-    data = ""
+    ids = []
+    names = []
+    images = []
+    nums = []
     for a in answer_list:
-        list_item = "<button type=\"button\" class=\"list-group-item\"" + \
-            " onClick=\"\">" + \
-            str(a.num) + "</li>"
-        data += list_item
+        # list_item = "<button type=\"button\" class=\"list-group-item\"" + \
+        #     " onClick=\"\">" + \
+        #     str(a.num) + "</li>"
+        # data += list_item
+        ids.append(a.student_id)
+        names.append(a.student_name)
+        images.append(a.image_url)
+        nums.append(a.num)
+
+    data = {}
+    data['ids'] = ids
+    data['names'] = names
+    data['images'] = images
+    data['nums'] = nums
+    data = json.dumps(data)
 
     return HttpResponse(data)

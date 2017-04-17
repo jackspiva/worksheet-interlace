@@ -5,25 +5,47 @@
 {% endblock title %}
 {% block content %}
 
-    <div class="container">
+    <div class="container" style="margin-top:5%;">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-sm-3">
                 <ul class="list-group">
                     {% for worksheet in worksheets %}
                         <button type="button" id="{{ worksheet.id }}_button" onClick="ws_click('{{ worksheet.name }}')" class="list-group-item">{{ worksheet.name }}</button>
                     {% endfor %}
                 </ul>
             </div>
-            <div class="col-md-3">
+            <div class="col-sm-3">
                 <ul class="list-group" id="section_list"></ul>
             </div>
-            <div class="col-md-3">
-                <ul class="list-group" id="answer_list"></ul>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <table id="answerTable" class="table table-striped table-bordered" cellspacing="0" width="100%"></table>
+            </div>
+            <div class="col-md-6" id="graphContainer">
+                <canvas id="answerChart" height="150" width="150"></canvas>
             </div>
         </div>
     </div>
 
     <script>
+        var table = $('#answerTable').DataTable({
+            data: [],
+            columns: [
+                {
+                    title: "ID"
+                }, {
+                    title: "Name"
+                }, {
+                    title: "Image"
+                }, {
+                    title: "Num"
+                }
+            ],
+            "scrollY": "300px",
+            "scrollCollapse": true,
+            "paging": false
+        });
         function ws_click(ws_name) {
             $('#section_list').append(function () {
                 $.get('/get_sections/', {
@@ -32,17 +54,45 @@
                     $('#section_list').html(data);
                 });
             })
+            $('#answer_list').empty();
+
         }
 
         function sec_click(sec_id) {
-            $('#answer_list').append(function () {
-                console.log("SECTION NAME IS " + sec_id);
-                $.get('/get_answers/', {
-                    json_data: JSON.stringify({sec_id: sec_id})
-                }, function (data) {
-                    $('#answer_list').html(data);
-                });
-            })
+            dataSet = [];
+            console.log("secclick");
+
+            console.log("SECTION NAME IS " + sec_id);
+            $.get('/get_answers/', {
+                json_data: JSON.stringify({sec_id: sec_id})
+            }, function (data) {
+                // $('#answer_list').html(data);
+                data = JSON.parse(data);
+                length = data['names'].length;
+
+                for (var i = 0; i < length; i++) {
+                    row = [data['ids'][i], data['names'][i], data['images'][i], data['nums'][i]
+                    ];
+                    dataSet.push(row);
+                }
+                makeTable(dataSet);
+                makeChart(data['names'], data['nums']);
+            });
+        }
+        var makeTable = function (dataSet) {
+            console.log("maketable");
+            table.clear();
+            table.rows.add(dataSet);
+            table.draw();
+        };
+    </script>
+    <script type="text/javascript">
+        function makeChart(labels, data) {
+            $('#answerChart').remove();
+            $('#graphContainer').append('<canvas id="answerChart" height="200"></canvas>');
+            createBarGraph(labels, data, "answerChart");
+
         }
     </script>
+
 {% endblock content %}

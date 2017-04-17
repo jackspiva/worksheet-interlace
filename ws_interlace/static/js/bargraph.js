@@ -19,6 +19,7 @@ var createBarGraph = function(labels, data, id) {
             }
         }
     });
+    return myChart;
 };
 var poolColors = function(a) {
     var pool = [];
