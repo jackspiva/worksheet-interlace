@@ -7,21 +7,22 @@
 
     <div class="container">
         <div class="row">
-            <div class="col">
+            <div class="col-md-3">
                 <ul class="list-group">
                     {% for worksheet in worksheets %}
                         <button type="button" id="{{ worksheet.id }}_button" onClick="ws_click('{{ worksheet.name }}')" class="list-group-item">{{ worksheet.name }}</button>
                     {% endfor %}
                 </ul>
             </div>
-            <div class="col">
+            <div class="col-md-3">
                 <ul class="list-group" id="section_list"></ul>
             </div>
-            <div class="col">
+            <div class="col-md-3">
                 <ul class="list-group" id="answer_list"></ul>
             </div>
         </div>
     </div>
+
     <script>
         function ws_click(ws_name) {
             $('#section_list').append(function () {
