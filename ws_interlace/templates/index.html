@@ -19,11 +19,22 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
-                <table id="answerTable" class="table table-striped table-bordered" cellspacing="0" width="100%"></table>
-            </div>
-            <div class="col-md-6" id="graphContainer">
-                <canvas id="answerChart" height="150" width="150"></canvas>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>
+                        <span id="curWS"></span>
+                        <span id="curSec"></span>
+                    </h3>
+
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-6">
+                        <table id="answerTable" class="table table-striped table-bordered" cellspacing="0" width="100%"></table>
+                    </div>
+                    <div class="col-md-6" id="graphContainer">
+                        <canvas id="answerChart" height="150" width="150"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -54,6 +65,9 @@
                     $('#section_list').html(data);
                 });
             })
+            $('#curWS').empty();
+            $('#curSec').empty();
+            $('#curWS').append(ws_name);
             $('#answer_list').empty();
 
         }
@@ -61,13 +75,14 @@
         function sec_click(sec_id) {
             dataSet = [];
             console.log("secclick");
-
             console.log("SECTION NAME IS " + sec_id);
             $.get('/get_answers/', {
                 json_data: JSON.stringify({sec_id: sec_id})
             }, function (data) {
                 // $('#answer_list').html(data);
                 data = JSON.parse(data);
+                $('#curSec').empty();
+                $('#curSec').append(' - ', data['section']);
                 length = data['names'].length;
 
                 for (var i = 0; i < length; i++) {

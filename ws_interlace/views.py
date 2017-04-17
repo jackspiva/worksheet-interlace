@@ -82,7 +82,7 @@ def get_sections(request):
     section_list = list(Section.objects.filter(worksheet=ws))
     data = ""
     for s in section_list:
-        list_item = "<button type=\"button\" class=\"list-group-item\"" + \
+        list_item = "<button type=\"button\" class=\"list-group-item\" id=\"" + s.name + "\"" + \
             " onClick=\"sec_click(\'" + str(s.id) + "\')\">" + \
             s.name + "</li>"
         data += list_item
@@ -116,6 +116,7 @@ def get_answers(request):
     data['names'] = names
     data['images'] = images
     data['nums'] = nums
+    data['section'] = sec.name
     data = json.dumps(data)
 
     return HttpResponse(data)
