@@ -23,5 +23,8 @@ urlpatterns = [
         name='worksheet_detail'),
     url(r'^api/', include(router.urls)),
     url(r'^api/docs/', TemplateView.as_view(template_name='docs/docs.html'), name='docs'),
+    url(r'^get_sections/$', views.get_sections, name='get_sections'),
+    url(r'^get_answers/$', views.get_answers, name='get_answers'),
+
 
 ]

@@ -5,7 +5,43 @@
 {% endblock title %}
 {% block content %}
 
-    <div class="list-group" style="width: 75%; margin-left: 2%; padding: 1%;">
-      <h3 style="color:white">Please select a worksheet section from the sidebar.</h3>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <ul class="list-group">
+                    {% for worksheet in worksheets %}
+                        <button type="button" id="{{ worksheet.id }}_button" onClick="ws_click('{{ worksheet.name }}')" class="list-group-item">{{ worksheet.name }}</button>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col">
+                <ul class="list-group" id="section_list"></ul>
+            </div>
+            <div class="col">
+                <ul class="list-group" id="answer_list"></ul>
+            </div>
+        </div>
     </div>
+    <script>
+        function ws_click(ws_name) {
+            $('#section_list').append(function () {
+                $.get('/get_sections/', {
+                    json_data: JSON.stringify({ws_name: ws_name})
+                }, function (data) {
+                    $('#section_list').html(data);
+                });
+            })
+        }
+
+        function sec_click(sec_id) {
+            $('#answer_list').append(function () {
+                console.log("SECTION NAME IS " + sec_id);
+                $.get('/get_answers/', {
+                    json_data: JSON.stringify({sec_id: sec_id})
+                }, function (data) {
+                    $('#answer_list').html(data);
+                });
+            })
+        }
+    </script>
 {% endblock content %}
