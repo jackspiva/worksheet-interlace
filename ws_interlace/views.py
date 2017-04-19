@@ -48,7 +48,6 @@ def index(request):
     for ws in worksheets:
         sec[ws.name] = list(Section.objects.filter(worksheet=ws))
 
-    print(sec[worksheets[0].name])
     return render(request, 'index.html', {'worksheets': worksheets, 'secs': sec, 'ws': worksheet})
 
 
@@ -82,11 +81,10 @@ def get_sections(request):
     section_list = list(Section.objects.filter(worksheet=ws))
     data = ""
     for s in section_list:
-        list_item = "<button type=\"button\" class=\"list-group-item\" id=\"" + s.name + "\"" + \
+        list_item = "<tr><td id=\"" + s.name + "\"" + \
             " onClick=\"sec_click(\'" + str(s.id) + "\')\">" + \
-            s.name + "</li>"
+            s.name + "</td></tr>"
         data += list_item
-
     return HttpResponse(data)
 
 

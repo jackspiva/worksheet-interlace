@@ -49,8 +49,12 @@ class WorksheetSerializer(serializers.HyperlinkedModelSerializer):
         sections_data = validated_data.pop('sections')
         worksheet = Worksheet.objects.create(**validated_data)
         for section_data in sections_data:
-            Section.objects.create(worksheet=worksheet, **section_data)
-        return section
+            answers_data = section_data.pop('answers')
+            section = Section.objects.create(
+                worksheet=worksheet, **section_data)
+            for answer_data in answers_data:
+                Answer.objects.create(section=section, **answer_data)
+        return worksheet
 
     class Meta:
         model = Worksheet

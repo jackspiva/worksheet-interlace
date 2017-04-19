@@ -5,7 +5,7 @@
 {% endblock title %}
 {% block content %}
 
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default" id="indexNav">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -29,15 +29,46 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-sm-3">
-                <ul class="list-group">
-                    {% for worksheet in worksheets %}
-                        <button type="button" id="{{ worksheet.id }}_button" onClick="ws_click('{{ worksheet.name }}')" class="list-group-item">{{ worksheet.name }}</button>
-                    {% endfor %}
-                </ul>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Worksheets</h3>
+                    </div>
+                    <div class="worksheetListContainer">
+                        <table class="table table-striped table-bordered table-hover" id="worksheetList" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for worksheet in worksheets %}
+                                    <tr>
+                                        <td id="{{ worksheet.id }}_button" onClick="ws_click('{{ worksheet.name }}')">{{ worksheet.name }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <div class="col-sm-3">
-                <ul class="list-group" id="section_list"></ul>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Sections</h3>
+                    </div>
+                    <div class="worksheetListContainer">
+                        <table class="table table-striped table-bordered table-hover" id="sectionList" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                </tr>
+                            </thead>
+                            <tbody class="list-group" id="section_list"></tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -50,17 +81,20 @@
 
                 </div>
                 <div class="panel-body">
-                    <div class="col-md-6">
-                        <table id="answerTable" class="table table-striped table-bordered" cellspacing="0" width="100%"></table>
+                    <div id="tableContainer">
+
+                        <div class="col-md-6">
+                            <table id="answerTable" class="table table-striped table-bordered" cellspacing="0" width="100%"></table>
+                        </div>
+                        <div class="col-md-6" id="graphContainer">
+                            <canvas id="answerChart" height="150" width="150"></canvas>
+                        </div>
                     </div>
-                    <div class="col-md-6" id="graphContainer">
-                        <canvas id="answerChart" height="150" width="150"></canvas>
-                    </div>
+
                 </div>
             </div>
         </div>
     </div>
-
     <script>
         var table = $('#answerTable').DataTable({
             data: [],
@@ -79,6 +113,8 @@
             "scrollCollapse": true,
             "paging": false
         });
+        $('#tableContainer').hide();
+
         function ws_click(ws_name) {
             $('#section_list').append(function () {
                 $.get('/get_sections/', {
@@ -91,13 +127,13 @@
             $('#curSec').empty();
             $('#curWS').append(ws_name);
             $('#answer_list').empty();
+            $('#tableContainer').hide();
 
         }
 
         function sec_click(sec_id) {
             dataSet = [];
-            console.log("secclick");
-            console.log("SECTION NAME IS " + sec_id);
+            $('#tableContainer').show();
             $.get('/get_answers/', {
                 json_data: JSON.stringify({sec_id: sec_id})
             }, function (data) {
@@ -121,13 +157,16 @@
             table.rows.add(dataSet);
             table.draw();
         };
+        $(document).ready(function () {
+            $('#worksheetList').DataTable({"scrollY": "200px", "scrollCollapse": true, "paging": false});
+            $('#sectionList').DataTable({"scrollY": "200px", "scrollCollapse": true, "paging": false});
+        });
     </script>
     <script type="text/javascript">
         function makeChart(labels, data) {
             $('#answerChart').remove();
             $('#graphContainer').append('<canvas id="answerChart" height="200"></canvas>');
             createBarGraph(labels, data, "answerChart");
-
         }
     </script>
 
