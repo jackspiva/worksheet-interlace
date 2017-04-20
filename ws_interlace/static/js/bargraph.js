@@ -1,6 +1,5 @@
 var createBarGraph = function(labels, data, id) {
     var ctx = document.getElementById(id);
-
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -16,7 +15,8 @@ var createBarGraph = function(labels, data, id) {
                 labels: {
                     display: false
                 }
-            }
+            },
+            borderWidth: 5
         }
     });
     return myChart;
