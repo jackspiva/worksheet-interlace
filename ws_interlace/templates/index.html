@@ -29,14 +29,16 @@
     <div id="rowContainer">
         <div class="row">
             <div class="col-md-12">
-                <div class="panel panel-default">
-                    <a data-toggle="collapse" href="#collapse1">
-                        <div class="panel-heading">
+                <div class="panel panel-primary">
+
+                    <div class="panel-heading">
+                        <a data-toggle="collapse" href="#collapse1" class="btn-block" id="wsListTitle">
                             <h3 class="panel-title">
                                 Select a worksheet and a section.
                             </h3>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
+
                     <div class="panel-collapse collapse" id="collapse1">
                         <div class="panel-body">
                             <div class="row">
@@ -78,11 +80,11 @@
             </div>
         </div>
 
-        <div class="row" id="tableContainer">
+        <div class="row">
             <div class="col-md-12">
-                <div class="panel panel-default">
+                <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title">
+                        <h3 class="panel-title">Viewing:
                             <span id="curWS"></span>
                             <span id="curSec"></span>
                         </h3>
@@ -90,14 +92,17 @@
                     </div>
 
                     <div class="panel-body">
-                        <div class="row">
+                        <div class="row" id="tableContainer">
                             <div class="col-sm-6">
-                                <table id="answerTable" class="table" cellspacing="0" width="100%"></table>
+                                <table id="answerTable" class="table table-hover" cellspacing="0" width="100%"></table>
                             </div>
 
                             <div class="col-sm-6" id="graphContainer">
                                 <canvas id="answerChart" height="50" width="100"></canvas>
                             </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6"></div>
                         </div>
                     </div>
                 </div>
@@ -120,7 +125,8 @@
             ],
             "scrollY": "300px",
             "scrollCollapse": true,
-            "paging": false
+            "paging": false,
+            "bInfo": false
         });
         $('#tableContainer').hide();
 
@@ -129,7 +135,9 @@
                 $.get('/get_sections/', {
                     json_data: JSON.stringify({ws_name: ws_name})
                 }, function (data) {
-                    $('#section_list').html(data);
+                    data = JSON.parse(data);
+                    var sec_list = data['section_list'];
+                    $('#section_list').html(sec_list);
                 });
             })
             $('#curWS').empty();
@@ -167,8 +175,8 @@
             table.draw();
         };
         $(document).ready(function () {
-            $('#worksheetList').DataTable({"scrollY": "200px", "scrollCollapse": true, "paging": false, "responsive": true});
-            $('#sectionList').DataTable({"scrollY": "200px", "scrollCollapse": true, "paging": false, "responsive": true});
+            $('#worksheetList').DataTable({"scrollY": "200px", "scrollCollapse": true, "paging": false, "responsive": true, "bInfo": false});
+            $('#sectionList').DataTable({"scrollY": "200px", "scrollCollapse": true, "paging": false, "responsive": true, "bInfo": false});
             $('#collapse1').collapse('toggle');
         });
         $('.panel-collapse').on('shown.bs.collapse', function (e) {

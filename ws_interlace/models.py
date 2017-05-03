@@ -17,6 +17,19 @@ from urllib.request import urlopen
 from ws_interlace.number_recognition.internal_api import parseNumberImage, test, trainDigits
 
 
+class Classroom(models.Model):
+    name = models.CharField(null=True, max_length=100)
+    teacher = models.CharField(null=True, max_length=100)
+
+
+class Student(models.Model):
+    id = models.IntegerField(primary_key=True)
+    student_id = models.IntegerField(null=True)
+    name = models.CharField(null=True, max_length=100)
+    classroom = models.ManyToManyField(
+        Classroom, related_name='students', blank=True)
+
+
 def get_remote_image(ans):
     if ans.image_url and not ans.image_file:
         response = urlopen(ans.image_url)
@@ -29,6 +42,8 @@ class Worksheet(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=100, unique=True, default='')
     description = models.TextField(blank=True, null=True, default='')
+    classroom = models.ForeignKey(
+        Classroom, related_name="worksheets", null=True)
 
 
 class Section(models.Model):
@@ -45,7 +60,6 @@ class Section(models.Model):
 
 class Answer(models.Model):
     created = models.DateTimeField(auto_now_add=True)
-    student_id = models.IntegerField(null=True)
     student_name = models.CharField(max_length=100, blank=True, default='')
     text = models.CharField(max_length=100, blank=True, default='')
     num = models.IntegerField(default=0)
@@ -53,6 +67,8 @@ class Answer(models.Model):
         Section, related_name='answers', null=True, blank=True)
     image_file = models.ImageField(upload_to='images', default='')
     image_url = models.URLField(default='')
+    student = models.ForeignKey(
+        Student, related_name="answers", null=True, blank=True, default=None)
 
 
 def get_image_path(instance, filename):

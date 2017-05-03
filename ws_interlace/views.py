@@ -7,8 +7,8 @@ from rest_framework import viewsets
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 
-from .models import Worksheet, Section, Answer
-from .serializers import SectionSerializer, AnswerSerializer, WorksheetSerializer
+from .models import Worksheet, Section, Answer, Student, Classroom
+from .serializers import SectionSerializer, AnswerSerializer, WorksheetSerializer, StudentSerializer, ClassroomSerializer
 
 from django.http import *
 import json
@@ -39,6 +39,24 @@ class AnswerViewSet(viewsets.ModelViewSet):
     """
     queryset = Answer.objects.all()
     serializer_class = AnswerSerializer
+
+
+class StudentViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+    """
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+
+class ClassroomViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+    """
+    queryset = Classroom.objects.all()
+    serializer_class = ClassroomSerializer
 
 
 def index(request):
@@ -79,12 +97,17 @@ def get_sections(request):
     ws_name = data_dict['ws_name']
     ws = Worksheet.objects.get(name=ws_name)
     section_list = list(Section.objects.filter(worksheet=ws))
-    data = ""
+    data = {}
+    if ws.classroom != None:
+        data['classroom'] = ws.classroom.name
+    data['section_list'] = ""
     for s in section_list:
         list_item = "<tr><td id=\"" + s.name + "\"" + \
             " onClick=\"sec_click(\'" + str(s.id) + "\')\">" + \
             s.name + "</td></tr>"
-        data += list_item
+        data['section_list'] += list_item
+
+    data = json.dumps(data)
     return HttpResponse(data)
 
 
