@@ -16,8 +16,6 @@ from urllib.request import urlopen
 # imports from my apps
 from ws_interlace.number_recognition.internal_api import parseNumberImage, test, trainDigits
 
-# old model
-
 
 def get_remote_image(ans):
     if ans.image_url and not ans.image_file:
