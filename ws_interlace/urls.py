@@ -2,15 +2,13 @@ from django.conf.urls import url, include
 from rest_framework.urlpatterns import format_suffix_patterns
 from ws_interlace import views
 from rest_framework.routers import DefaultRouter
-from ws_interlace.views import SectionViewSet, AnswerViewSet, WorksheetViewSet, StudentViewSet, ClassroomViewSet
+from ws_interlace.views import SectionViewSet, AnswerViewSet, WorksheetViewSet
 from rest_framework import renderers
 from django.views.generic import TemplateView, DetailView
 from django.conf import settings
 
 
 router = DefaultRouter()
-router.register(r'students', views.StudentViewSet)
-router.register(r'classrooms', views.ClassroomViewSet)
 router.register(r'sections', views.SectionViewSet)
 router.register(r'answers', views.AnswerViewSet)
 router.register(r'worksheets', views.WorksheetViewSet)

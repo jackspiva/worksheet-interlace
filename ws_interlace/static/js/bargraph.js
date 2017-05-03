@@ -16,10 +16,6 @@ var createBarGraph = function(labels, data, id) {
                     display: false
                 }
             },
-            title: {
-                display: true,
-                text: 'Section Answers'
-            },
             borderWidth: 5
         }
     });
