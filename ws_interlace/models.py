@@ -9,7 +9,6 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.core.files import File
 from django.conf import settings
-
 # 3rd party app imports
 from urllib.request import urlopen
 
@@ -47,7 +46,7 @@ class Answer(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     student_id = models.IntegerField(null=True)
     student_name = models.CharField(max_length=100, blank=True, default='')
-    text = models.CharField(max_length=100, blank=True, default='')
+    text = models.CharField(max_length=100, blank=True, default='-')
     num = models.IntegerField(default=0)
     section = models.ForeignKey(
         Section, related_name='answers', null=True, blank=True)

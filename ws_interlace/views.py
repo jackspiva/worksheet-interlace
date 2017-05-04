@@ -94,11 +94,15 @@ def get_answers(request):
     sec_id = data_dict['sec_id']
     print("SECTION NAME: ", sec_id)
     sec = Section.objects.get(id=sec_id)
+    sec_type = sec.section_type
+    print("sectoin type is ", sec_type)
     answer_list = list(Answer.objects.filter(section=sec))
     ids = []
     names = []
     images = []
     nums = []
+    names = []
+    collaborators = []
     for a in answer_list:
         # list_item = "<button type=\"button\" class=\"list-group-item\"" + \
         #     " onClick=\"\">" + \
@@ -108,8 +112,13 @@ def get_answers(request):
         names.append(a.student_name)
         images.append(a.image_url)
         nums.append(a.num)
+        collaborators.append(a.text)
 
     data = {}
+    data['type'] = sec_type
+
+    data['collaborators'] = collaborators
+
     data['ids'] = ids
     data['names'] = names
     data['images'] = images

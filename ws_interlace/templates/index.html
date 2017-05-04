@@ -116,6 +116,8 @@
                     title: "Image"
                 }, {
                     title: "Num"
+                }, {
+                    title: "Collaborators"
                 }
             ],
             "scrollY": "300px",
@@ -123,7 +125,6 @@
             "paging": false
         });
         $('#tableContainer').hide();
-
         function ws_click(ws_name) {
             $('#section_list').append(function () {
                 $.get('/get_sections/', {
@@ -137,9 +138,7 @@
             $('#curWS').append(ws_name);
             $('#answer_list').empty();
             $('#tableContainer').hide();
-
         }
-
         function sec_click(sec_id) {
             dataSet = [];
             $('#tableContainer').show();
@@ -151,14 +150,36 @@
                 $('#curSec').empty();
                 $('#curSec').append(' - ', data['section']);
                 length = data['names'].length;
-
+                type = data['type'];
                 for (var i = 0; i < length; i++) {
-                    row = [data['ids'][i], data['names'][i], data['images'][i], data['nums'][i]
+                    row = [data['ids'][i], data['names'][i], data['images'][i], data['nums'][i], data['collaborators'][i]
                     ];
                     dataSet.push(row);
                 }
                 makeTable(dataSet);
-                makeChart(data['names'], data['nums']);
+                if (type == "Names") {
+                    table.column(0).visible(true);
+                    table.column(1).visible(true);
+                    table.column(2).visible(true);
+                    table.column(3).visible(false);
+                    table.column(4).visible(false);
+                    $('#answerChart').hide();
+                } else if (type == "Collaborators") {
+                    table.column(0).visible(true);
+                    table.column(1).visible(true);
+                    table.column(2).visible(true);
+                    table.column(3).visible(false);
+                    table.column(4).visible(true);
+                    $('#answerChart').hide();
+                } else {
+                    table.column(0).visible(true);
+                    table.column(1).visible(true);
+                    table.column(2).visible(true);
+                    table.column(3).visible(true);
+                    table.column(4).visible(false);
+                    makeChart(data['names'], data['nums']);
+
+                }
             });
         }
         var makeTable = function (dataSet) {
@@ -182,7 +203,6 @@
             $('#answerChart').remove();
             $('#graphContainer').append('<canvas id="answerChart" height="200"></canvas>');
             myChart = createBarGraph(labels, data, "answerChart");
-
         }
     </script>
 
