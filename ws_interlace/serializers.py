@@ -1,22 +1,11 @@
 import os
-import urllib
+
 
 from django.core.files import File
 
 from rest_framework import serializers
 
 from ws_interlace.models import Section, Answer, Worksheet
-
-
-def get_remote_image(ans):
-    print("SAVE THIS:" + str(ans.image_url))
-    if ans.image_url and not ans.image_file:
-        result = urllib.urlretrieve(ans.image_url)
-        ans.image_file.save(
-            os.path.basename(ans.image_url),
-            File(open(result[0]))
-        )
-        ans.save()
 
 
 class AnswerSerializer(serializers.HyperlinkedModelSerializer):
@@ -39,7 +28,8 @@ class SectionSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Section
-        fields = ('name', 'worksheet', 'description', 'answers', 'id',)
+        fields = ('name', 'worksheet', 'description',
+                  'answers', 'id', 'section_type')
 
 
 class WorksheetSerializer(serializers.HyperlinkedModelSerializer):
@@ -58,4 +48,4 @@ class WorksheetSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Worksheet
-        fields = ('name', 'description', 'id', 'sections')
+        fields = ('name', 'description', 'id', 'sections', 'roster')

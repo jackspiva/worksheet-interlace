@@ -11,9 +11,10 @@ from django.core.files import File
 from django.conf import settings
 # 3rd party app imports
 from urllib.request import urlopen
-
+import urllib
 # imports from my apps
 from ws_interlace.number_recognition.internal_api import parseNumberImage, test, trainDigits
+from ws_interlace.text_recognition.internal_api import processWordList, refinedProcessWordList
 
 
 def get_remote_image(ans):
@@ -28,6 +29,7 @@ class Worksheet(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=100, unique=True, default='')
     description = models.TextField(blank=True, null=True, default='')
+    roster = models.TextField(blank=True, null=True, default='')
 
 
 class Section(models.Model):
@@ -35,6 +37,7 @@ class Section(models.Model):
     name = models.CharField(max_length=100, default='')
     description = models.TextField(blank=True, null=True, default='')
     section_type = models.CharField(max_length=100, blank=True, default='')
+
     worksheet = models.ForeignKey(
         Worksheet, related_name='sections', null=True, blank=True)
 
@@ -58,12 +61,47 @@ def get_image_path(instance, filename):
     return '/'.join(['answer_images', instance.answer.id, filename])
 
 
-# @receiver(post_save, sender=Answer)
-# def begin_image_processing(sender, **kwargs):
-#     if kwargs.get('created', False):
-#         ans = kwargs.get('instance')
-#         get_remote_image(ans)
-#         print("FILE:", ans.image_file)
-#         result = parseNumberImage(ans.image_file)
-#         ans.num = result
-#         ans.save()
+def get_remote_image(ans):
+    print("SAVE THIS:" + str(ans.image_url))
+    if ans.image_url and not ans.image_file:
+        result = urllib.request.urlretrieve(ans.image_url)
+        ans.image_file.save(
+            os.path.basename(ans.image_url),
+            File(open(result[0]))
+        )
+        ans.save()
+
+
+@receiver(post_save, sender=Answer)
+def begin_image_processing(sender, **kwargs):
+    print("listener")
+    if kwargs.get('created', False):
+        ans = kwargs.get('instance')
+        sec = ans.section
+        ws = sec.worksheet
+        classList = ws.roster
+        wordList = classList.split(", ")
+        collabList = processWordList(ans.image_url)
+        refinedCollabList = refinedProcessWordList(ans.image_url, wordList)
+        collabString = ', '.join(map(str, collabList))
+        refinedCollabString = ', '.join(map(str, refinedCollabList))
+        print(collabList)
+        if sec.section_type == "Names":
+            ans.student_name = refinedCollabString
+        else:
+            nameSec = Section.objects.filter(
+                worksheet=ws).filter(name="Names")
+            nameAns = Answer.objects.filter(
+                section=nameSec).filter(student_id=ans.student_id)
+            nameAns = list(nameAns)
+            desiredName = nameAns[0]
+            ans.student_name = desiredName.student_name
+            if sec.section_type == "Collaborators":
+                ans.text = refinedCollabString
+            elif sec.section_type == "Numbers":
+                ans.num = int(collabString)
+                # get_remote_image(ans)
+                # result = parseNumberImage(ans.image_file)
+                # ans.num = result
+
+        ans.save()

@@ -152,7 +152,10 @@
                 length = data['names'].length;
                 type = data['type'];
                 for (var i = 0; i < length; i++) {
-                    row = [data['ids'][i], data['names'][i], data['images'][i], data['nums'][i], data['collaborators'][i]
+                    row = [
+                        data['ids'][i], data['names'][i], '<a href=' + data['images'][i] + '>' + data['images'][i] + '</a>',
+                        data['nums'][i],
+                        data['collaborators'][i]
                     ];
                     dataSet.push(row);
                 }
