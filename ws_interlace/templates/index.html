@@ -1,102 +1,70 @@
-{% extends 'base.html' %}
-{% block title %}
-    Homepage -
-    {{ block.super }}
-{% endblock title %}
-{% block content %}
-
-    <nav class="navbar navbar-default" id="indexNav">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Worksheet Interlace</a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav"></ul>
-            </div>
-            <!-- /.navbar-collapse -->
+{% extends 'base.html' %} {% block title %} Homepage - {{ block.super }} {% endblock title %} {% block content %}
+<nav class="navbar navbar-default" id="indexNav">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Worksheet Interlace</a>
         </div>
-        <!-- /.container-fluid -->
-    </nav>
-    <div id="rowContainer">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-default">
-                    <a data-toggle="collapse" href="#collapse1">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">
-                                Select a worksheet and a section.
-                            </h3>
-                        </div>
-                    </a>
-                    <div class="panel-collapse collapse" id="collapse1">
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="worksheetListContainer">
-                                        <table class="table table-hover" id="worksheetList" cellspacing="0" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for worksheet in worksheets %}
-                                                    <tr>
-                                                        <td id="{{ worksheet.id }}_button" onClick="ws_click('{{ worksheet.name }}')">{{ worksheet.name }}
-                                                        </td>
-                                                    </tr>
-                                                {% endfor %}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="worksheetListContainer">
-                                        <table class="table table-hover" id="sectionList" cellspacing="0" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="list-group" id="section_list"></tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav"></ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+<div id="rowContainer">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                                <a data-toggle="collapse" href="#collapse1"><div>Select a worksheet and a section.</div></a>
+                    </h3>
                 </div>
-            </div>
-        </div>
-
-        <div class="row" id="tableContainer">
-            <div class="col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <span id="curWS"></span>
-                            <span id="curSec"></span>
-                        </h3>
-
-                    </div>
-
+                <div class="panel-collapse collapse" id="collapse1">
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-sm-6">
-                                <table id="answerTable" class="table" cellspacing="0" width="100%"></table>
+                            <div class="col-md-6">
+                                <div class="worksheetListContainer">
+                                    <table class="table table-hover" id="worksheetList" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th class="coltitle1">Worksheet Names</th>
+                                                <th class="coltitle2">Worksheet Descriptions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for worksheet in worksheets %}
+                                            <tr>
+                                                <td class="ws_names" id="{{ worksheet.id }}_button" onClick="ws_click('{{ worksheet.name }}')">{{ worksheet.name }}
+                                                </td>
+                                                <td id="{{ worksheet.id }}_2_button" onClick="ws_click('{{ worksheet.name }}')">{{ worksheet.description }}
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-
-                            <div class="col-sm-6" id="graphContainer">
-                                <canvas id="answerChart" height="50" width="100"></canvas>
+                            <div class="col-md-6">
+                                <div class="worksheetListContainer">
+                                    <table class="table table-hover" id="sectionList" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th class="coltitle1">Section Names</th>
+                                                <th class="coltitle2">Section Descriptions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="list-group" id="section_list"></tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -104,109 +72,182 @@
             </div>
         </div>
     </div>
-    <script>
-        var table = $('#answerTable').DataTable({
-            data: [],
-            columns: [
-                {
-                    title: "ID"
-                }, {
-                    title: "Name"
-                }, {
-                    title: "Image"
-                }, {
-                    title: "Num"
-                }, {
-                    title: "Collaborators"
-                }
-            ],
-            "scrollY": "300px",
-            "scrollCollapse": true,
-            "paging": false
-        });
-        $('#tableContainer').hide();
-        function ws_click(ws_name) {
-            $('#section_list').append(function () {
-                $.get('/get_sections/', {
-                    json_data: JSON.stringify({ws_name: ws_name})
-                }, function (data) {
-                    $('#section_list').html(data);
-                });
+    <div class="row" id="tableContainer">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                            <span id="curWS"></span>
+                            <span id="curSec"></span>
+                        </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <table id="answerTable" class="table" cellspacing="0" width="100%"></table>
+                        </div>
+                        <div class="col-sm-6" id="graphContainer">
+                            <canvas id="answerChart" height="50" width="100"></canvas>
+                        </div>
+                        <div id="graphContainer">
+                            <canvas id="my_canvas" width="600" height="400"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+var table = $('#answerTable').DataTable({
+    data: [],
+    columns: [{
+        title: "ID"
+    }, {
+        title: "Name"
+    }, {
+        title: "Image"
+    }, {
+        title: "Num"
+    }, {
+        title: "Collaborators"
+    }],
+    "scrollY": "300px",
+    "scrollCollapse": true,
+    "paging": false
+});
+$('#tableContainer').hide();
+
+function ws_click(ws_name) {
+    $('#section_list').append(function() {
+        $.get('/get_sections/', {
+            json_data: JSON.stringify({
+                ws_name: ws_name
             })
-            $('#curWS').empty();
-            $('#curSec').empty();
-            $('#curWS').append(ws_name);
-            $('#answer_list').empty();
-            $('#tableContainer').hide();
-        }
-        function sec_click(sec_id) {
-            dataSet = [];
-            $('#tableContainer').show();
-            $.get('/get_answers/', {
-                json_data: JSON.stringify({sec_id: sec_id})
-            }, function (data) {
-                // $('#answer_list').html(data);
-                data = JSON.parse(data);
-                $('#curSec').empty();
-                $('#curSec').append(' - ', data['section']);
-                length = data['names'].length;
-                type = data['type'];
-                for (var i = 0; i < length; i++) {
-                    row = [
-                        data['ids'][i], data['names'][i], '<a href=' + data['images'][i] + '>' + data['images'][i] + '</a>',
-                        data['nums'][i],
-                        data['collaborators'][i]
-                    ];
-                    dataSet.push(row);
-                }
-                makeTable(dataSet);
-                if (type == "Names") {
-                    table.column(0).visible(true);
-                    table.column(1).visible(true);
-                    table.column(2).visible(true);
-                    table.column(3).visible(false);
-                    table.column(4).visible(false);
-                    $('#answerChart').hide();
-                } else if (type == "Collaborators") {
-                    table.column(0).visible(true);
-                    table.column(1).visible(true);
-                    table.column(2).visible(true);
-                    table.column(3).visible(false);
-                    table.column(4).visible(true);
-                    $('#answerChart').hide();
-                } else {
-                    table.column(0).visible(true);
-                    table.column(1).visible(true);
-                    table.column(2).visible(true);
-                    table.column(3).visible(true);
-                    table.column(4).visible(false);
-                    makeChart(data['names'], data['nums']);
-
-                }
-            });
-        }
-        var makeTable = function (dataSet) {
-            table.clear();
-            table.rows.add(dataSet);
-            table.draw();
-        };
-        $(document).ready(function () {
-            $('#worksheetList').DataTable({"scrollY": "200px", "scrollCollapse": true, "paging": false, "responsive": true});
-            $('#sectionList').DataTable({"scrollY": "200px", "scrollCollapse": true, "paging": false, "responsive": true});
-            $('#collapse1').collapse('toggle');
+        }, function(data) {
+            $('#section_list').html(data);
         });
-        $('.panel-collapse').on('shown.bs.collapse', function (e) {
-            $('#worksheetList').DataTable().columns.adjust().responsive.recalc();
-            $('#sectionList').DataTable().columns.adjust().responsive.recalc();
-        });
-    </script>
-    <script type="text/javascript">
-        var myChart;
-        function makeChart(labels, data) {
-            $('#answerChart').remove();
-            $('#graphContainer').append('<canvas id="answerChart" height="200"></canvas>');
-            myChart = createBarGraph(labels, data, "answerChart");
-        }
-    </script>
+    })
+    $('#curWS').empty();
+    $('#curSec').empty();
+    $('#curWS').append(ws_name);
+    $('#answer_list').empty();
+    $('#tableContainer').hide();
+}
 
+function sec_click(sec_id) {
+    dataSet = [];
+    $('#tableContainer').show();
+    $.get('/get_answers/', {
+        json_data: JSON.stringify({
+            sec_id: sec_id
+        })
+    }, function(data) {
+        // $('#answer_list').html(data);
+        data = JSON.parse(data);
+        $('#curSec').empty();
+        $('#curSec').append(': ', data['section'], '<span id="section_description">       -       ', data['section_description'], '</span>');
+        length = data['names'].length;
+        type = data['type'];
+        for (var i = 0; i < length; i++) {
+            row = [
+                data['ids'][i], data['names'][i], '<a href=' + data['images'][i] + '>' + data['images'][i] + '</a>',
+                data['nums'][i],
+                data['collaborators'][i]
+            ];
+            dataSet.push(row);
+        }
+        makeTable(dataSet);
+        if (type == "Names") {
+            table.column(0).visible(true);
+            table.column(1).visible(true);
+            table.column(2).visible(true);
+            table.column(3).visible(false);
+            table.column(4).visible(false);
+            $('#answerChart').hide();
+        } else if (type == "Collaborators") {
+            table.column(0).visible(true);
+            table.column(1).visible(true);
+            table.column(2).visible(true);
+            table.column(3).visible(false);
+            table.column(4).visible(true);
+            $('my_canvas').empty();
+            makeGraph(data['names'], data['collaborators']);
+            $('#answerChart').hide();
+        } else {
+            table.column(0).visible(true);
+            table.column(1).visible(true);
+            table.column(2).visible(true);
+            table.column(3).visible(true);
+            table.column(4).visible(false);
+            makeChart(data['names'], data['nums']);
+
+        }
+    });
+}
+var makeTable = function(dataSet) {
+    table.clear();
+    table.rows.add(dataSet);
+    table.draw();
+};
+$(document).ready(function() {
+    $('#worksheetList').DataTable({
+        "scrollY": "200px",
+        "scrollCollapse": true,
+        "paging": false,
+        "responsive": true
+    });
+    $('#sectionList').DataTable({
+        "scrollY": "200px",
+        "scrollCollapse": true,
+        "paging": false,
+        "responsive": true
+    });
+    $('#collapse1').collapse('toggle');
+});
+$('.panel-collapse').on('shown.bs.collapse', function(e) {
+    $('#worksheetList').DataTable().columns.adjust().responsive.recalc();
+    $('#sectionList').DataTable().columns.adjust().responsive.recalc();
+});
+</script>
+<script type="text/javascript">
+var myChart;
+
+function makeChart(labels, data) {
+    $('#answerChart').remove();
+    $('#graphContainer').append('<canvas id="answerChart" height="200"></canvas>');
+    myChart = createBarGraph(labels, data, "answerChart");
+}
+
+function makeGraph(names, collaborators) {
+    console.log("makin graph");
+    console.log(names);
+    var graph = new Springy.Graph();
+
+    var nodes = {};
+    var collabList = [];
+    for (var i = 0; i < names.length; i++) {
+        nodes[names[i]] = graph.newNode({
+            label: names[i]
+        });
+        console.log("node: " + names[i]);
+    }
+    for (var i = 0; i < collaborators.length; i++) {
+        collabList[i] = collaborators[i].split(', ');
+        for (var j = 0; j < collabList[i].length; j++) {
+            console.log('edge between: ' + names[i] + ' and ' + collabList[i][j]);
+            if (nodes[collabList[i][j]] == "") {
+
+            } else {
+                graph.newEdge(nodes[names[i]], nodes[collabList[i][j]]);
+            }
+        }
+
+    }
+    $('#my_canvas').springy({
+        graph: graph
+    });
+}
+// console.log(collabList);
+</script>
 {% endblock content %}

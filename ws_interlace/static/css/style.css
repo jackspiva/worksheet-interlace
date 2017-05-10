@@ -2,3 +2,25 @@
   margin-left: 1%;
   margin-right: 1%
 }
+
+#section_description {
+  font-weight: lighter;
+}
+
+.ws_names {
+  font-weight: bold;
+}
+
+.section_names {
+  font-weight: bold;
+}
+
+.coltitle1 {
+  font-size: 130%;
+  color: #4945B3;
+}
+
+.coltitle2 {
+  font-size: 130%;
+  color: #4945B3;
+}

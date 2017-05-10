@@ -99,7 +99,8 @@ def begin_image_processing(sender, **kwargs):
             if sec.section_type == "Collaborators":
                 ans.text = refinedCollabString
             elif sec.section_type == "Numbers":
-                ans.num = int(collabString)
+                print("collab string is : ", collabString)
+                ans.num = collabString
                 # get_remote_image(ans)
                 # result = parseNumberImage(ans.image_file)
                 # ans.num = result
