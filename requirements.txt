@@ -31,5 +31,4 @@ scipy>=0.18.1
 uritemplate>=3.0.0
 waitress>=1.0.2
 whitenoise>=3.3.0
-hellowebapp-deploy
 psycopg2>=2.6.1
