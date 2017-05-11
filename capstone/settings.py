@@ -39,11 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'ws_interlace',
-    'rest_framework_docs',
 ]
-REST_FRAMEWORK = {
-    'PAGE_SIZE': 10,
-}
+
 
 
 MIDDLEWARE_CLASSES = [
@@ -129,6 +126,6 @@ STATIC_ROOT = 'staticfiles'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
-# For image uploads
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+# # For image uploads
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = '/media/'
