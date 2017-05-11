@@ -83,18 +83,25 @@ def begin_image_processing(sender, **kwargs):
         wordList = classList.split(", ")
         collabList = processWordList(ans.image_url)
         refinedCollabList = refinedProcessWordList(ans.image_url, wordList)
+        print("collabList is: ", collabList)
+        print("refinedCollabList is: ", refinedCollabList)
         collabString = ', '.join(map(str, collabList))
         refinedCollabString = ', '.join(map(str, refinedCollabList))
         print(collabList)
         if sec.section_type == "Names":
             ans.student_name = refinedCollabString
         else:
+            # Finding student name:
+            #   1. Find names section
             nameSec = Section.objects.filter(
                 worksheet=ws).filter(name="Names")
+            #   2. Find desired student in names section
             nameAns = Answer.objects.filter(
                 section=nameSec).filter(student_id=ans.student_id)
+            #   3. Get name of that student
             nameAns = list(nameAns)
             desiredName = nameAns[0]
+            #   4. Set name
             ans.student_name = desiredName.student_name
             if sec.section_type == "Collaborators":
                 ans.text = refinedCollabString

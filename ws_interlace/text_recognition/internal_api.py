@@ -105,7 +105,8 @@ def getRefinedWordList_Many2Many(wordList, dictionaryList):
                     for each word in a word list
             Ensure that mapping is 1-to-1
     """
-
+    print("wordlist is: ", wordList)
+    print("dictionaryList is: ", dictionaryList)
     matrix = generateDistanceMatrix(
         wordList, dictionaryList, levenshteinDistance)
     matrix = wordDifferenceCountToIndex(matrix)
@@ -188,7 +189,8 @@ def generateDistanceMatrix(wordList, dictionaryList, distanceFunction):
 
 
 def levenshteinDistance(s, t):
-
+    s = s.upper()
+    t = t.upper()
     # base cases
     if s == t:
         return 0
